@@ -1,0 +1,69 @@
+{
+  "name": "demotoken",
+  "version": "1.0.0",
+  "description": "Demo Token By ChienNguyen",
+  "keywords": [
+    "react-app",
+    "scratch"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --inline --content-base ./ --host 192.168.1.17 --port 3000 --open",
+    "build": "rimraf dist &&  webpack --progress --profile"
+  },
+  "author": "ChienNguyen",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-loadable": "^5.4.0",
+    "react-router-dom": "^4.2.2",
+    "webpack-cli": "^2.1.5"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              ">1%",
+              "last 3 versions"
+            ]
+          }
+        }
+      ],
+      "stage-2",
+      "latest",
+      "react"
+    ],
+    "plugins": [
+      "syntax-dynamic-import",
+      "transform-class-properties"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.0",
+    "rimraf": "^2.6.2",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack": "^4.7.0",
+    "webpack-cli": "^2.1.2",
+    "webpack-dev-server": "^3.1.4"
+  }
+}
