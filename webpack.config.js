@@ -8,7 +8,7 @@ module.exports = {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
         port: 9000,
-        historyApiFallback: true,
+        historyApiFallback: true, 
     },
     devtool: "cheap-eval-source-map",
     performance: {
@@ -24,6 +24,9 @@ module.exports = {
         filename: 'bundle.js',
         chunkFilename: '[id][hash].js',
         publicPath: '/'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx']
     },
     module: {
         rules: [{
@@ -74,5 +77,11 @@ module.exports = {
             sourceMap: true
         }),
     ],
-    mode: 'production'
+    mode: 'production' ,
+    externals: {
+        // global app config object
+        config: JSON.stringify({
+            apiUrl: 'http://localhost:4000'
+        })
+    }
 }
