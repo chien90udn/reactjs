@@ -6,7 +6,20 @@ import { userActions } from '../../actions';
 import { listProduct } from '../../constants';
 
 
-class HomePage extends React.Component {
+class Product extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            productInfo: []
+        }
+    }
+
+    componentWillMount()
+    {
+        let id = this.props.match.params.id;
+        this.setState({productInfo: listProduct[id]});
+    }
     componentDidMount() {
         this.props.dispatch(userActions.getAll());
     }
@@ -20,32 +33,32 @@ class HomePage extends React.Component {
         return (
             <div className="col-md-12">
 
-                <h3>List Products</h3>
+                <h3>Products Detail</h3>
 
-                {listProduct &&
+                {this.state.productInfo &&
                     <div className="col">
                         <div className="row">
-                            {listProduct.map((product, index) =>
-                                <div className="col-12 col-md-6 col-lg-4">
+                           
+                                <div className="col-md-8 offset-md-2">
                                     <div className="card">
                                         <img className="card-img-top" src="https://dummyimage.com/600x400/55595c/fff"/>
                                         <div className="card-body">
-                                            <h4 className="card-title"><a href={'/product/' + index} title="{product.name}">{product.name}</a></h4>
+                                            <h4 className="card-title"><a title="{this.state.productInfo.name}">{this.state.productInfo.name}</a></h4>
                                             <p className="card-text">QR Code: </p>
                                             <div className="row">
-                                                { (product.flag_type == 1) ?
-                                                        <div className="col">
+                                                { (this.state.productInfo.flag_type == 1) ?
+                                                        <div className="col-12">
                                                             <div className="col">
-                                                            Price: <p className="text-danger btn-block">{product.price} ETH</p>
+                                                            Price: <p className="text-danger btn-block">{this.state.productInfo.price} ETH</p>
                                                             </div>
                                                             <div className="col">
-                                                            Donate: <p className="text-primary btn-block">{product.donate} TOKEN</p>
+                                                            Donate: <p className="text-primary btn-block">{this.state.productInfo.donate} TOKEN</p>
                                                             </div>
                                                         </div>
                                                     
                                                     :
                                                         <div className="col">
-                                                        Price: <p className="text-danger btn-block">{product.token} TOKEN</p>
+                                                        Price: <p className="text-danger btn-block">{this.state.productInfo.token} TOKEN</p>
                                                         </div>
 
                                                 }
@@ -55,13 +68,12 @@ class HomePage extends React.Component {
                                                     <button type="button" className="btn btn-primary btn-block dim mb-3">Like</button>
                                                 </div>
                                                 <div className="col">
-                                                    <Link class="btn dim btn-success btn-block" to={'/product/' + index}>Detail</Link>
+                                                    <button type="button" className="btn btn-success btn-block dim mb-3">Checkout</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            )}
                         </div>
                     </div>
                 }
@@ -80,5 +92,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedHomePage = connect(mapStateToProps)(HomePage);
-export { connectedHomePage as HomePage };
+const connectedProduct = connect(mapStateToProps)(Product);
+export { connectedProduct as Product };
