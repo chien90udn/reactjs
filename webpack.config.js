@@ -76,6 +76,16 @@ module.exports = {
         new UglifyJsPlugin({
             sourceMap: true
         }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.ProvidePlugin({
+            '$': "jquery",
+            'jQuery': "jquery",
+
+        }),
+        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', Infinity),
+        new webpack.DefinePlugin({
+            "require.specified": "require.resolve"
+        }),
     ],
     mode: 'production' ,
     externals: {
@@ -83,5 +93,8 @@ module.exports = {
         config: JSON.stringify({
             apiUrl: 'http://localhost:4000'
         })
+    },
+    node: {
+        fs: 'empty'
     }
 }

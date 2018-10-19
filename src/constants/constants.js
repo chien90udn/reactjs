@@ -1,8 +1,11 @@
 // If user like at Token
 export const getTokenForLike = 5;
 
-//
+// Api tetnest using web3
 export const serverApi = "http://54.95.196.101:8545";
+
+// Api export private key from address
+export const apiExportPrivateKey = "http://54.95.196.101/projects/ApiPhp/index.php";
 
 // account admin
 export const accountAdmin = {
@@ -10,6 +13,9 @@ export const accountAdmin = {
     address    		: '0x437aeffa148fc863977ce904ed666179a8760590',
     passPhasre    	: 'chien123456'
 };
+
+//
+export const addressContract = "0x8e3ee419aece76bdb32b3281cc6322a5f2765007"; // Address contract
 
 export const typeProduct = {
     sell_eth        : 1,

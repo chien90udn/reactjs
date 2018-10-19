@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { store } from './helpers';
 import { App } from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../public/assets/css/custom.css';
 import 'jquery/dist/jquery.min.js'
 import 'bootstrap/dist/js/bootstrap.min.js'
 

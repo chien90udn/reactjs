@@ -25,7 +25,9 @@ class Admin extends React.Component {
                 <h3>All registered users:</h3>
                 {users.loading && <em>Loading users...</em>}
                 {users.error && <span className="text-danger">ERROR: {users.error}</span>}
-
+                <div className="col-12">
+                    <p>Address contract: 0x8e3ee419aece76bdb32b3281cc6322a5f2765007</p>
+                </div>
                 {users.items &&
                     <div className="col">
                         <div className="row">

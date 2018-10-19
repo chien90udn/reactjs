@@ -31,7 +31,7 @@ class App extends React.Component {
             <div className="jumbotron">
                 
                 <div className="container">
-                    <div className="col-sm-8 offset-md-2">
+                    <div className="col-sm-10 offset-md-1">
                         {alert.message &&
                             <div className={`alert ${alert.type}`}>{alert.message}</div>
                         }
