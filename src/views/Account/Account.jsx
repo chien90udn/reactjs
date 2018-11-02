@@ -41,7 +41,7 @@ class Account extends React.Component {
     }
 
 
-    handleRefresh(event)
+    handleRefresh(event) 
     {
         // 
         this.setState({ display_loading : true});
