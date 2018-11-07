@@ -16,6 +16,12 @@ import demooken_artifacts from '../../build/contracts/DEMOToken.json'
 var parsed = JSON.parse(JSON.stringify(demooken_artifacts));
 var abi = parsed.abi;
 
+var HttpHeaderProvider = require('httpheaderprovider');
+
+var headers = {
+  "Access-Control-Allow-Credential": "true"
+}
+var provider = new HttpHeaderProvider('http://52.194.193.223:8545', headers);
 
 
 
@@ -47,20 +53,23 @@ class Account extends React.Component {
         this.setState({ display_loading : true});
         try {
             if (typeof web3 !== 'undefined') {
-                window.web3 = new Web3(new Web3.providers.HttpProvider("http://54.95.196.101:8545"));
+                window.web3 = new Web3();
+                web3.setProvider(provider);
             }
-
+            console.log(web3.personal);
+            web3.personal.unlockAccount('0x1b1321ff4df14d41caaed7189762b1c8f49452de', 'chien12d@', 600);
+            web3.eth.sendTransaction({from:'0x1b1321ff4df14d41caaed7189762b1c8f49452de' ,to:this.props.user.username, "gas": "0x76c0", "gasPrice": "0x9184e72a000", "value": "0x9184e72a"});
             const ContractDemo = web3.eth.contract(abi);
-            const contractInstance = ContractDemo.at('0x8e3ee419aece76bdb32b3281cc6322a5f2765007');
+            const contractInstance = ContractDemo.at('0x17e9d10dd785fc34d98f0e491a9639f5cdc3f26f');
             let token = contractInstance.balanceOf.call(this.props.user.username).toString();
-            web3.personal.unlockAccount('0x437aeffa148fc863977ce904ed666179a8760590', 'chien123456', 600);
+            // web3.personal.unlockAccount('0x437aeffa148fc863977ce904ed666179a8760590', 'chien123456', 600);
 
-                if(contractInstance.transfer.call(this.props.user.username, 1, { from: '0x437aeffa148fc863977ce904ed666179a8760590' }).toString())
-                {
-                    alert("Transfer Success "+ "1" +" To Address: " + this.props.user.username + " !!!");
-                }
+            //     if(contractInstance.transfer.call(this.props.user.username, 1, { from: '0x437aeffa148fc863977ce904ed666179a8760590' }).toString())
+            //     {
+            //         alert("Transfer Success "+ "1" +" To Address: " + this.props.user.username + " !!!");
+            //     }
             this.setState({token : token}); 
-            let  eth = web3.eth.getBalance(this.props.user.username).toString();
+            let  eth = parseInt(web3.eth.getBalance(this.props.user.username).toString()) / 1000000000000000000;
             this.setState({eth  : eth}); 
         } catch (err) {
             console.log(err);

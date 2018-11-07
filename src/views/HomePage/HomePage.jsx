@@ -15,6 +15,13 @@ import jpegDemo from '../../../public/assets/images/img.jpeg';
 var parsed = JSON.parse(JSON.stringify(demooken_artifacts));
 var abi = parsed.abi;
 
+var HttpHeaderProvider = require('httpheaderprovider');
+
+var headers = {
+  "Access-Control-Allow-Credential": "true"
+}
+var provider = new HttpHeaderProvider('http://52.194.193.223:8545', headers);
+
 
 
 class HomePage extends React.Component {
@@ -30,23 +37,25 @@ class HomePage extends React.Component {
         this.props.dispatch(userActions.getAll());
     }
 
-    handleLike(id) {
+    handleLike(index, event) {
         this.setState({display_loading: true });
         try {
             if(this.props.user && this.props.user.username)
             {
                 if (typeof web3 !== 'undefined') {
-                    window.web3 = new Web3(new Web3.providers.HttpProvider("http://54.95.196.101:8545"));
+                    window.web3 = new Web3();
+                    web3.setProvider(provider);
                 }
                 const ContractDemo = web3.eth.contract(abi);
-                const contractInstance = ContractDemo.at('0x8e3ee419aece76bdb32b3281cc6322a5f2765007');
-
-                web3.personal.unlockAccount('0x437aeffa148fc863977ce904ed666179a8760590', 'chien123456', 600);
-
-                if(contractInstance.transfer.call(this.props.user.username, 1, { from: '0x437aeffa148fc863977ce904ed666179a8760590' }).toString())
+                const contractInstance = ContractDemo.at('0x17e9d10dd785fc34d98f0e491a9639f5cdc3f26f');
+                let num = 1;
+                if(listProduct[index] && listProduct[index].donate)
                 {
-                    alert("Transfer Success "+ "1" +" To Address: " + this.props.user.username + " !!!");
+                    num = listProduct[index].donate;
                 }
+                web3.personal.unlockAccount('0x1b1321ff4df14d41caaed7189762b1c8f49452de', 'chien12d@', 600);
+                let TxHash = contractInstance.transfer(this.props.user.username, 1, { from: '0x1b1321ff4df14d41caaed7189762b1c8f49452de' });
+                alert("TxHash: "+ TxHash +"!!!");
             }
         } catch (err) {
             console.log(err);
@@ -69,9 +78,9 @@ class HomePage extends React.Component {
                                     <div className="card">
                                         <img className="card-img-top" src={jpegDemo}/>
                                         <div className="card-body">
-                                            <h4 className="card-title"><a href={'/product/' + index} title="{product.name}">{product.name}</a></h4>
+                                            <h4 className="card-title"><a href={'/#/product/' + index} title="{product.name}">{product.name}</a></h4>
                                             <p className="card-text">QR Code: 
-                                                <QRCode value={document.location.href + 'product/' + index} />
+                                                <QRCode value={document.location.href + '#/product/' + index} />
                                             </p>
                                             <div className="row">
                                                 { (product.flag_type == 1) ?
@@ -93,7 +102,7 @@ class HomePage extends React.Component {
                                                 
 
                                                 <div className="col">
-                                                    <button type="button" onClick={this.handleLike.bind(this)} className="btn btn-primary btn-block dim mb-3">Like</button>
+                                                    <button type="button" onClick={this.handleLike.bind(this, index)} className="btn btn-primary btn-block dim mb-3">Like</button>
                                                 </div>
                                                 <div className="col">
                                                     <Link class="btn dim btn-success btn-block" to={'/product/' + index}>Detail</Link>

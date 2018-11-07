@@ -5,10 +5,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 module.exports = {
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
+        contentBase: path.join("/var/www/html"),
         compress: true,
-        port: 9000,
-        historyApiFallback: true, 
+        port: 3000,
+        historyApiFallback: true
     },
     devtool: "cheap-eval-source-map",
     performance: {
@@ -20,7 +20,7 @@ module.exports = {
         index: './src/index.js',
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve('/var/www/html'),
         filename: 'bundle.js',
         chunkFilename: '[id][hash].js',
         publicPath: '/'

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../../actions';
+var ethereum_address = require('ethereum-address');
 
 class RegisterPage extends React.Component {
     constructor(props) {
@@ -40,7 +41,13 @@ class RegisterPage extends React.Component {
         const { user } = this.state;
         const { dispatch } = this.props;
         if (user.username && user.password) {
-            dispatch(userActions.register(user));
+            if (ethereum_address.isAddress(user.username)) {
+                dispatch(userActions.register(user));
+            }
+            else {
+                alert("Invalid Ethereum address.");
+            }
+           
         }
     }
 

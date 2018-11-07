@@ -5,16 +5,51 @@ import { connect } from 'react-redux';
 import { userActions } from '../../actions';
 import { listProduct } from '../../constants';
 
+import { default as Web3 } from 'web3';
+import LoadingScreen  from '../../components/common/LoadingScreen.js';
+
+// Import our contract artifacts and turn them into usable abstractions.
+import demooken_artifacts from '../../build/contracts/DEMOToken.json'
+import jpegDemo from '../../../public/assets/images/img.jpeg';
+
+var parsed = JSON.parse(JSON.stringify(demooken_artifacts));
+var abi = parsed.abi;
+
+var HttpHeaderProvider = require('httpheaderprovider');
+
+var headers = {
+  "Access-Control-Allow-Credential": "true"
+}
+var provider = new HttpHeaderProvider('http://52.194.193.223:8545', headers);
+
+
+window.web3 = new Web3();
+web3.setProvider(provider);
+
+const ContractDemo = web3.eth.contract(abi);
+const contractInstance = ContractDemo.at('0x17e9d10dd785fc34d98f0e491a9639f5cdc3f26f');
+
+
+
 
 class Admin extends React.Component {
 
     componentDidMount() {
         
         this.props.dispatch(userActions.getAll());
+        
     }
 
     handleDeleteUser(id) {
         return (e) => this.props.dispatch(userActions.delete(id));
+    }
+
+    handleSendETH(username, event) {
+       
+
+        web3.personal.unlockAccount('0x1b1321ff4df14d41caaed7189762b1c8f49452de', 'chien12d@', 600);
+        let TxHash = web3.eth.sendTransaction({from:'0x1b1321ff4df14d41caaed7189762b1c8f49452de' ,to:username, "gas": "0x76c0", "gasPrice": "0x9184e72a000", "value": "0xDE0B6B3A7640000"});
+        alert("TxHash Admin send eth into "+ username +" :" + TxHash);
     }
 
     render() {
@@ -26,7 +61,11 @@ class Admin extends React.Component {
                 {users.loading && <em>Loading users...</em>}
                 {users.error && <span className="text-danger">ERROR: {users.error}</span>}
                 <div className="col-12">
-                    <p>Address contract: 0x8e3ee419aece76bdb32b3281cc6322a5f2765007</p>
+                    <p>Address Admin: 0x1b1321ff4df14d41caaed7189762b1c8f49452de</p>
+                    <p>Address contract: 0x17e9d10dd785fc34d98f0e491a9639f5cdc3f26f</p>
+                    <p>Balance: {parseInt(web3.eth.getBalance('0x1b1321ff4df14d41caaed7189762b1c8f49452de').toString()) / 1000000000000000000} ETH</p>
+                    <p>BalanceOf: {contractInstance.balanceOf.call('0x1b1321ff4df14d41caaed7189762b1c8f49452de').toString()} TOKEN</p>
+                    
                 </div>
                 {users.items &&
                     <div className="col">
@@ -35,14 +74,10 @@ class Admin extends React.Component {
                                 <div className="col-12 mb-2 p-2">
                                     <div className="card">
                                         <p>Account: {user.username} </p>
-                                        <p>Balance: 0 ETH</p>
-                                        <p>BalanceOf: 0 TOKEN</p>
+                                        <p>Balance: {parseInt(web3.eth.getBalance(user.username).toString())/ 1000000000000000000} ETH</p>
+                                        <p>BalanceOf: {contractInstance.balanceOf.call(user.username).toString()} TOKEN</p>
                                         <div className="col-12">
-                                            {
-                                                user.deleting ? <em> - Deleting...</em>
-                                                : user.deleteError ? <span className="text-danger"> - ERROR: {user.deleteError}</span>
-                                                : <button className="btn btn-danger" onClick={this.handleDeleteUser(user.id)}>Delete</button>
-                                            }
+                                            <button className="btn btn-danger" onClick={this.handleSendETH.bind(this, user.username)}>SendETH</button>
                                         </div>
                                     </div>
                                 </div>

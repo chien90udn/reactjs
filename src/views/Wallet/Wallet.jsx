@@ -5,6 +5,12 @@ import { userActions } from '../../actions';
 import axios from 'axios';
 import LoadingScreen  from '../../components/common/LoadingScreen.js';
 
+var HttpHeaderProvider = require('httpheaderprovider');
+
+var headers = {
+  "Access-Control-Allow-Credential": "true"
+}
+var provider = new HttpHeaderProvider('http://52.194.193.223:8545', headers);
 
 //
 import { default as Web3 } from 'web3';
@@ -48,12 +54,19 @@ class Wallet extends React.Component {
             this.setState({ submitted: true,
                             display_loading: true });
             try {
-                window.web3 = new Web3(new Web3.providers.HttpProvider("http://54.95.196.101:8545"));
+                // window.web3 = new Web3(new Web3.providers.HttpProvider("http://52.194.193.223:8545"));
+                window.web3 = new Web3();
+                web3.setProvider(provider);
+
+                // window.web3 = new Web3(web3.currentProvider);
              
                 let newUser = web3.personal.newAccount(this.state.user.password);
+
+             
                 this.state.newAccount.address = newUser;
-                axios.get('http://54.95.196.101/projects/ApiPhp/index.php?address=' + newUser)
+                axios.get('http://52.194.193.223/api/index.php?address=' + newUser)
                       .then(function (response) {
+
                         // handle success
                         var privateKey = keythereum.recover(this.state.user.password, response.data);
                         this.setState({

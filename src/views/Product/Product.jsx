@@ -1,44 +1,60 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Modal from 'react-modal';
 
 import { userActions } from '../../actions';
 import { listProduct } from '../../constants';
 var QRCode = require('qrcode.react');
 
-const HDWalletProvider = require("truffle-hdwallet-provider-privkey");
-const privKeys = ["c6fbe1bc141bd504c1c2fc81601e71eef136a6756889a64640bf3cdfc621416e"]; 
-const provider = new HDWalletProvider(privKeys, 'http://54.95.196.101:8545');
-import jpegDemo from '../../../public/assets/images/img.jpeg';
-var fs = require('fs');
 
-//
 import { default as Web3 } from 'web3';
-import { default as contract } from 'truffle-contract';
-
-var keythereum = require("keythereum");
+import LoadingScreen  from '../../components/common/LoadingScreen.js';
 
 // Import our contract artifacts and turn them into usable abstractions.
 import demooken_artifacts from '../../build/contracts/DEMOToken.json'
-
+import jpegDemo from '../../../public/assets/images/img.jpeg';
 
 var parsed = JSON.parse(JSON.stringify(demooken_artifacts));
 var abi = parsed.abi;
 
+var HttpHeaderProvider = require('httpheaderprovider');
 
-// MetaCoin is our usable abstraction, which we'll use through the code below.
-const DEMOToken = contract(demooken_artifacts)
+var headers = {
+  "Access-Control-Allow-Credential": "true"
+}
+var provider = new HttpHeaderProvider('http://52.194.193.223:8545', headers);
 
-const YourContract = new web3.eth.contract(abi, "0x437aeffa148fc863977ce904ed666179a8760590");
 
+window.web3 = new Web3();
+web3.setProvider(provider);
+const ContractDemo = web3.eth.contract(abi);
+const contractInstance = ContractDemo.at('0x17e9d10dd785fc34d98f0e491a9639f5cdc3f26f');  
+
+ 
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 class Product extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            productInfo: []
+            productInfo: [],
+            showModal: false,
+            pass: null
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillMount()
@@ -48,35 +64,98 @@ class Product extends React.Component {
     }
     componentDidMount() {
         this.props.dispatch(userActions.getAll());
-
-        // if (typeof web3 !== 'undefined') {
-
-        //     window.web3 = new Web3(new Web3.providers.HttpProvider("http://54.95.196.101:8545"));
-        //     const ContractDemo = web3.eth.contract(abi);
-
-        //     const contractInstance = ContractDemo.at('0x8e3ee419aece76bdb32b3281cc6322a5f2765007');
-
-        //     web3.personal.unlockAccount('0x437aeffa148fc863977ce904ed666179a8760590', 'chien123456', 600);
-          
-
-        //     console.log("0x5037239f158db3599bab1ec9907f3cf6f5b7786c: " + contractInstance.balanceOf.call('0x5037239f158db3599bab1ec9907f3cf6f5b7786c').toString())
-              
-
-        // } else {
-        //     window.web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545'))
-        // }
     }
+
+
+    handleDeleteUser(id) {
+        return (e) => this.props.dispatch(userActions.delete(id));
+    }
+
+    handleLike(index, event) {
+        try {
+            if(this.props.user && this.props.user.username)
+            {
+               
+                const ContractDemo = web3.eth.contract(abi);
+                const contractInstance = ContractDemo.at('0x17e9d10dd785fc34d98f0e491a9639f5cdc3f26f');
+                let num = 1;
+                if(listProduct[index] && listProduct[index].donate)
+                {
+                    num = listProduct[index].donate;
+                }
+                web3.personal.unlockAccount('0x1b1321ff4df14d41caaed7189762b1c8f49452de', 'chien12d@', 600);
+                let TxHash = contractInstance.transfer(this.props.user.username, 1, { from: '0x1b1321ff4df14d41caaed7189762b1c8f49452de' });
+                alert("TxHash: "+ TxHash +"!!!");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+       
+    }
+
 
     handleCheckout(event)
     {
         if(this.props && this.props.user)
         {
-            contractInstance.transfer("0x5037239f158db3599bab1ec9907f3cf6f5b7786c", this.state.productInfo.donate, { from: '0x437aeffa148fc863977ce904ed666179a8760590' });
+        
+            let  eth = parseInt(web3.eth.getBalance(this.props.user.username).toString()) / 1000000000000000000;
+            let price = this.state.productInfo.price;
+            if(eth > price)
+            {
+                this.setState({ showModal: true });
+                //web3.personal.unlockAccount('0x1b1321ff4df14d41caaed7189762b1c8f49452de', 'chien12d@', 600);
+                //let txH = contractInstance.transfer(this.props.user.username, this.state.productInfo.donate, { from: '0x1b1321ff4df14d41caaed7189762b1c8f49452de' });
+
+
+                //let TxHash = web3.eth.sendTransaction({from: this.props.user.username ,to: "0x1b1321ff4df14d41caaed7189762b1c8f49452de", "gas": "0x76c0", "gasPrice": "0x9184e72a000", "value": "0x" + price.toString(16)});
+                //alert(TxHash);
+            }else
+            {
+                alert("Not enough money !!!");
+            }
+           
+            
         }
     }
 
-    handleDeleteUser(id) {
-        return (e) => this.props.dispatch(userActions.delete(id));
+    handleChange(event) {
+        const pass = event.target.value;
+        this.setState({pass: pass});
+    }
+
+    handleClose(event) {
+        this.setState({ showModal: false });
+    }
+
+    handleShow(event) {
+        this.setState({ showModal: true });
+    }
+
+
+    handleSubmit(event)
+    {
+        let price = this.state.productInfo.price;
+        try {
+            let check = web3.personal.unlockAccount(this.props.user.username, this.state.pass, 600);
+            console.log(this.props.user.username + '|' + this.state.pass);
+            if(check)
+            {
+                web3.personal.unlockAccount('0x1b1321ff4df14d41caaed7189762b1c8f49452de', 'chien12d@', 600);
+                let txH = contractInstance.transfer(this.props.user.username, this.state.productInfo.donate, { from: '0x1b1321ff4df14d41caaed7189762b1c8f49452de' });
+
+                web3.personal.unlockAccount(this.props.user.username, this.state.pass, 600);
+                let TxHash = web3.eth.sendTransaction({from: this.props.user.username ,to: "0x1b1321ff4df14d41caaed7189762b1c8f49452de", "gas": "0x76c0", "gasPrice": "0x9184e72a000", "value": "0x" + price.toString(16)});
+                this.setState({ showModal: false });
+                alert("Success !!!" + TxHash);
+            }
+            else
+            {
+                alert("Invalid pass.");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     render() {
@@ -128,9 +207,44 @@ class Product extends React.Component {
                         </div>
                     </div>
                 }
+
+
+                <div className="static-modal">
+                    <Modal
+                      isOpen={this.state.showModal}
+                      onRequestClose={this.handleClose.bind(this)}
+                      style={customStyles}
+                      contentLabel="Account"
+                    >
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" onClick={this.handleClose.bind(this)}>&times;</button>
+                          </div>
+                          <div class="modal-body">
+                            <div className={'form-group'}>
+                                    <label htmlFor="password">Passphrase</label>
+                                    <input type="password" className="form-control" name="password" value={user.password} onChange={this.handleChange} />
+                                    
+                            </div>
+                           
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" onClick={this.handleSubmit.bind(this)} className="btn btn-success btn-block dim mb-3">Submit</button>
+                          </div>
+                        </div>
+
+                      
+                    </Modal>
+             
                 
+                </div>
+
+                
+
             </div>
         );
+
+       
     }
 }
 
