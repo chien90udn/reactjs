@@ -30,6 +30,8 @@ class App extends React.Component {
 
     render() {
         const { alert } = this.props;
+        localStorage.setItem('user', true);
+        console.log(localStorage.getItem('user'));
         return (
             <div className="jumbotron">
                 
@@ -50,7 +52,7 @@ class App extends React.Component {
                                 <Route path="/product/:id" component={Product} />
                                 <Route path="/account" component={Account} />
                                 <Route path="/checkout/:id" component={Checkout} />
-                                 <Route path="/reward" component={Reward} />
+                                <Route path="/reward" component={Reward} />
                                 <Route path="/reward/:token" component={Reward} />
 
                                 
