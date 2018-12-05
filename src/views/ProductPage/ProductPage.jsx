@@ -24,7 +24,7 @@ var provider = new HttpHeaderProvider('http://52.194.193.223:8545', headers);
 
 
 
-class HomePage extends React.Component {
+class ProductPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -86,7 +86,7 @@ class HomePage extends React.Component {
                                                 { (product.flag_type == 1) ?
                                                         <div className="col">
                                                             <div className="col">
-                                                            Price: <p className="text-danger btn-block">{product.price} JPY</p>
+                                                            Price: <p className="text-danger btn-block">{product.price} ETH</p>
                                                             </div>
                                                             <div className="col">
                                                             Donate: <p className="text-primary btn-block">{product.donate} TOKEN</p>
@@ -99,9 +99,13 @@ class HomePage extends React.Component {
                                                         </div>
 
                                                 }
+                                                
 
                                                 <div className="col">
-                                                    <Link class="btn dim btn-success btn-block" to={'/checkout/' + index}>Buy</Link>
+                                                    <button type="button" onClick={this.handleLike.bind(this, index)} className="btn btn-primary btn-block dim mb-3">Like</button>
+                                                </div>
+                                                <div className="col">
+                                                    <Link class="btn dim btn-success btn-block" to={'/product/' + index}>Detail</Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -126,5 +130,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedHomePage = connect(mapStateToProps)(HomePage);
-export { connectedHomePage as HomePage };
+const connectedHomePage = connect(mapStateToProps)(ProductPage);
+export { connectedHomePage as ProductPage };

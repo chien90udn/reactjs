@@ -24,7 +24,7 @@ var provider = new HttpHeaderProvider('http://52.194.193.223:8545', headers);
 
 
 
-class HomePage extends React.Component {
+class List extends React.Component {
     constructor(props) {
         super(props);
 
@@ -126,5 +126,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedHomePage = connect(mapStateToProps)(HomePage);
-export { connectedHomePage as HomePage };
+const connectedList = connect(mapStateToProps)(List);
+export { connectedList as List };

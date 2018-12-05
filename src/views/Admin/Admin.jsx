@@ -57,9 +57,6 @@ class Admin extends React.Component {
         return (
             <div className="col-md-12">
                 
-                <h3>All registered users:</h3>
-                {users.loading && <em>Loading users...</em>}
-                {users.error && <span className="text-danger">ERROR: {users.error}</span>}
                 <div className="col-12">
                     <p>Address Admin: 0x1b1321ff4df14d41caaed7189762b1c8f49452de</p>
                     <p>Address contract: 0x17e9d10dd785fc34d98f0e491a9639f5cdc3f26f</p>
@@ -67,24 +64,6 @@ class Admin extends React.Component {
                     <p>BalanceOf: {contractInstance.balanceOf.call('0x1b1321ff4df14d41caaed7189762b1c8f49452de').toString()} TOKEN</p>
                     
                 </div>
-                {users.items &&
-                    <div className="col">
-                        <div className="row">
-                            {users.items.map((user, index) =>
-                                <div className="col-12 mb-2 p-2">
-                                    <div className="card">
-                                        <p>Account: {user.username} </p>
-                                        <p>Balance: {parseInt(web3.eth.getBalance(user.username).toString())/ 1000000000000000000} ETH</p>
-                                        <p>BalanceOf: {contractInstance.balanceOf.call(user.username).toString()} TOKEN</p>
-                                        <div className="col-12">
-                                            <button className="btn btn-danger" onClick={this.handleSendETH.bind(this, user.username)}>SendETH</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                }
             </div>
         );
     }

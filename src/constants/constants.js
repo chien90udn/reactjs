@@ -27,7 +27,7 @@ export const listProduct = [
         id          : "01", 
         name        : "Iphone 6", 
         avatar      : "img.jpeg",
-        price       : 30,  // ETH
+        price       : 1,  // ETH
         token       : 10,  // Token
         donate      : 2,   // using Token
         like        : [],     // If user like at Token
@@ -38,7 +38,7 @@ export const listProduct = [
         id          : "02", 
         name        : "Iphone 6S", 
         avatar      : "img.jpeg",
-        price       : 35,  // ETH
+        price       : 2,  // ETH
         token       : 10,  // Token
         donate      : 2,   // using Token
         like        : [],     // If user like at Token
@@ -49,7 +49,7 @@ export const listProduct = [
         id          : "03", 
         name        : "Iphone 6 Plus", 
         avatar      : "img.jpeg",
-        price       : 40,  // ETH
+        price       : 2,  // ETH
         token       : 10,  // Token
         donate      : 3,   // using Token
         like        : [],     // If user like at Token
@@ -60,7 +60,7 @@ export const listProduct = [
         id          : "04", 
         name        : "Iphone 7", 
         avatar      : "img.jpeg",
-        price       : 45,  // USD
+        price       : 1,  // USD
         token       : 10,  // USD
         donate      : 4,   // using Token
         like        : [],     // If user like at Token
@@ -71,7 +71,7 @@ export const listProduct = [
         id          : "05", 
         name        : "Iphone 7 Plus", 
         avatar      : "img.jpeg",
-        price       : 50,  // ETH
+        price       : 3,  // ETH
         token       : 15,  // Token
         donate      : 5,   // using Token
         like        : [],     // If user like at Token
@@ -82,7 +82,7 @@ export const listProduct = [
         id          : "06", 
         name        : "Iphone 8", 
         avatar      : "img.jpeg",
-        price       : 60,  // ETH
+        price       : 4,  // ETH
         token       : 10,  // Toen
         donate      : 6,   // using Token
         like        : [],     // If user like at Token
@@ -93,7 +93,7 @@ export const listProduct = [
         id          : "07", 
         name        : "Iphone X", 
         avatar      : "img.jpeg",
-        price       : 90,  // ETH
+        price       : 1,  // ETH
         token       : 10,  // Token
         donate      : 2,   // using Token
         like        : [],     // If user like at Token
@@ -104,7 +104,7 @@ export const listProduct = [
         id          : "08", 
         name        : "Iphone XS", 
         avatar      : "img.jpeg",
-        price       : 100,  // USD
+        price       : 1,  // USD
         token       : 100,  // USD
         donate      : 10,   // using Token
         like        : [],     // If user like at Token
@@ -115,7 +115,7 @@ export const listProduct = [
         id          : "09", 
         name        : "Iphone XMax", 
         avatar      : "img.jpeg",
-        price       : 100,  // ETH
+        price       : 1,  // ETH
         token       : 100,  // Token
         donate      : 10,   // using Token
         like        : [],     // If user like at Token

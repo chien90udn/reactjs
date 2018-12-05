@@ -56,7 +56,6 @@ class Account extends React.Component {
                 window.web3 = new Web3();
                 web3.setProvider(provider);
             }
-            console.log(web3.personal);
             web3.personal.unlockAccount('0x1b1321ff4df14d41caaed7189762b1c8f49452de', 'chien12d@', 600);
             web3.eth.sendTransaction({from:'0x1b1321ff4df14d41caaed7189762b1c8f49452de' ,to:this.props.user.username, "gas": "0x76c0", "gasPrice": "0x9184e72a000", "value": "0x9184e72a"});
             const ContractDemo = web3.eth.contract(abi);

@@ -13,6 +13,9 @@ import { Admin } from './views/Admin';
 import { Wallet } from './views/Wallet';
 import { Product } from './views/Product';
 import { Account } from './views/Account';
+import { Checkout } from './views/Checkout';
+import { Reward } from './views/Reward';
+import { List } from './views/List';
 
 class App extends React.Component {
     constructor(props) {
@@ -42,9 +45,12 @@ class App extends React.Component {
                                 <Route path="/login" component={LoginPage} />
                                 <Route path="/register" component={RegisterPage} />
                                 <Route path="/admin" component={Admin} />
+                                <Route path="/list" component={List} />
                                 <Route path="/wallet" component={Wallet} />
                                 <Route path="/product/:id" component={Product} />
                                 <Route path="/account" component={Account} />
+                                <Route path="/checkout/:id" component={Checkout} />
+                                <Route path="/reward/:token" component={Reward} />
                                 
                             </div>
                         </Router>
