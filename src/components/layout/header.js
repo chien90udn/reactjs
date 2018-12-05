@@ -36,6 +36,11 @@ class Header extends React.Component {
 		        	<li className="nav-item active">
 		            	<Link class="nav-link" to="/wallet">Create New Wallet</Link>
 		          	</li>
+
+		          	<li className="nav-item active">
+		            	<Link class="nav-link" to="/reward">Reward</Link>
+		          	</li>
+
 		          {user ?
 		          	<li className="nav-item active">
 		            	<Link class="nav-link" to="/login">Logout</Link>

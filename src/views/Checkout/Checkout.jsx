@@ -41,7 +41,7 @@ class Checkout extends React.Component {
                 
                 axios.get('http://52.199.160.114/api/example/api.php?action=createCodeURL')
                       .then(function (response) {
-                            this.setState({ url_code: response });
+                            this.setState({ url_code: response.data });
                             console.log("Get URL CODE OK");
                             console.log(response);
                         axios.get('http://52.199.160.114/api/example/api.php?action=sendMail&email=' + username)
@@ -93,11 +93,14 @@ class Checkout extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
+    const { users, authentication } = state;
+    const { user } = authentication;
     return {
-        loggingIn
+        user,
+        users
     };
 }
+
 
 const connectedCheckout = connect(mapStateToProps)(Checkout);
 export { connectedCheckout as Checkout }; 
