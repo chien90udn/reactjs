@@ -10,7 +10,7 @@
   "scripts": {
     "watch": "webpack --watch",
     "start": "webpack-dev-server --mode development --inline --content-base ./ --host localhost --port 3001 --open",
-    "build": "rimraf dist &&  webpack -p --progress --profile"
+    "build": "webpack -p --progress --profile"
   },
   "author": "ChienNguyen",
   "license": "ISC",

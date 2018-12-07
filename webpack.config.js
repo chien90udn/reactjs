@@ -7,7 +7,7 @@ module.exports = {
     devServer: {
         contentBase: path.join("/var/www/html"),
         compress: true,
-        port: 3000,
+        port: 3001,
         historyApiFallback: true
     },
     devtool: "cheap-eval-source-map",

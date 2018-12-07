@@ -79,9 +79,7 @@ class HomePage extends React.Component {
                                         <img className="card-img-top" src={jpegDemo}/>
                                         <div className="card-body">
                                             <h4 className="card-title"><a href={'/#/product/' + index} title="{product.name}">{product.name}</a></h4>
-                                            <p className="card-text">QR Code: 
-                                                <QRCode value={document.location.href + '#/product/' + index} />
-                                            </p>
+                                            
                                             <div className="row">
                                                 { (product.flag_type == 1) ?
                                                         <div className="col">
