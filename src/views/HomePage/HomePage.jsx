@@ -84,21 +84,21 @@ class HomePage extends React.Component {
                                                 { (product.flag_type == 1) ?
                                                         <div className="col">
                                                             <div className="col">
-                                                            Price: <p className="text-danger btn-block">{product.price} JPY</p>
+                                                            Price: <p className="text-danger float-right">{product.price} JPY</p>
                                                             </div>
-                                                            <div className="col">
-                                                            Donate: <p className="text-primary btn-block">{product.donate} TOKEN</p>
+                                                            <div className="col clearfix">
+                                                            Donate: <p className="text-primary float-right">{product.donate} TOKEN</p>
                                                             </div>
                                                         </div>
                                                     
                                                     :
                                                         <div className="col">
-                                                        Price: <p className="text-danger btn-block">{product.token} TOKEN</p>
+                                                        Price: <p className="text-danger float-right">{product.token} TOKEN</p>
                                                         </div>
 
                                                 }
 
-                                                <div className="col">
+                                                <div className="col-12">
                                                     <Link class="btn dim btn-success btn-block" to={'/checkout/' + index}>Buy</Link>
                                                 </div>
                                             </div>

@@ -16,6 +16,7 @@ import { Account } from './views/Account';
 import { Checkout } from './views/Checkout';
 import { Reward } from './views/Reward';
 import { List } from './views/List';
+import { RecentOrders } from './views/RecentOrders';
 
 class App extends React.Component {
     constructor(props) {
@@ -54,6 +55,7 @@ class App extends React.Component {
                                 <Route path="/checkout/:id" component={Checkout} />
                                 <Route path="/reward" component={Reward} />
                                 <Route path="/reward/:token" component={Reward} />
+                                <Route path="/recent_orders" component={RecentOrders} />
 
                                 
                             </div>

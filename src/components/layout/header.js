@@ -41,15 +41,11 @@ class Header extends React.Component {
 		            	<Link class="nav-link" to="/reward">Reward</Link>
 		          	</li>
 
-		          {user ?
 		          	<li className="nav-item active">
-		            	<Link class="nav-link" to="/login">Logout</Link>
+		            	<Link class="nav-link" to="/recent_order">Recent orders</Link>
 		          	</li>
-		          	:
-		          	<li className="nav-item active">
-		            	<Link class="nav-link" to="/login">Login</Link>
-		          	</li>
-		          }
+		          	
+
 		        </ul>
 		        
 		      </div>
