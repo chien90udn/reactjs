@@ -14,8 +14,8 @@ class Checkout extends React.Component {
         this.props.dispatch(userActions.logout());
 
         this.state = {
-            username: '',
-            password: '',
+            email: '',
+            confirm_email: '',
             submitted: false,
             show_qr_code: false,
             url_code : 'weixin://wxpay/bizpayurl?pr=W8hWg4X'
@@ -30,21 +30,26 @@ class Checkout extends React.Component {
         this.setState({ [name]: value });
     }
 
+    handlePaste(e){
+        alert("Not allowed");
+        return false;
+    }
+
+   
     handleSubmit(e) {
         e.preventDefault();
         this.setState({ submitted: true });
-        const { username, password } = this.state;
+        const { email, confirm_email } = this.state;
         const { dispatch } = this.props;
-        if (username && validateEmail(username)) {
+        if (email && validateEmail(email) && email == confirm_email) {
             this.setState({ show_qr_code: true });
             try {
                 
                 axios.get('http://52.199.160.114/api/example/api.php?action=createCodeURL')
                       .then(function (response) {
                             this.setState({ url_code: response.data });
-                            console.log("Get URL CODE OK");
                             console.log(response);
-                        axios.get('http://52.199.160.114/api/example/api.php?action=sendMail&email=' + username)
+                        axios.get('http://52.199.160.114/api/example/api.php?action=sendMail&email=' + email)
                               .then(function (response) {
                                 // handle success
                                 console.log(response);
@@ -58,24 +63,31 @@ class Checkout extends React.Component {
 
     render() {
         const { loggingIn } = this.props;
-        const { username, password, submitted } = this.state;
+        const { email ,submitted, confirm_email } = this.state;
        
         return (
             <div className="col-md-10 offset-md-1">
-                <h2 className="text-center">Checkout</h2>
+                <h2 className="text-center">INFO CART</h2>
                 <div style={{
                             display: ( !this.state.show_qr_code ? 'block' : 'none' )
                         }}>
                     <form name="form" onSubmit={this.handleSubmit}>
-                        <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                            <label htmlFor="username">Email</label>
-                            <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-                            {submitted && (!username || !validateEmail(username))  &&
+                        <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
+                            <label htmlFor="email">Email</label>
+                            <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
+                            {submitted && (!email || !validateEmail(email))  &&
                                 <div className="help-block">Email is required</div>
                             }
                         </div>
+                         <div className={'form-group' + (submitted && !confirm_email ? ' has-error' : '')}>
+                            <label htmlFor="confirm_email">Confirm Email</label>
+                            <input onPaste={(e) => this.handlePaste(e)} type="text" className="form-control" name="confirm_email" value={confirm_email} onChange={this.handleChange} />
+                            {submitted && (!confirm_email || !validateEmail(confirm_email))  &&
+                                <div className="help-block">Confirm email is required</div>
+                            }
+                        </div>
                         <div className="form-group">
-                            <button className="btn btn-primary">Payment</button>
+                            <button className="btn btn-primary">Proceed to checkout</button>
                         </div>
                     </form>
                 </div>

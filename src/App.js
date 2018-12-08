@@ -55,7 +55,7 @@ class App extends React.Component {
                                 <Route path="/checkout/:id" component={Checkout} />
                                 <Route path="/reward" component={Reward} />
                                 <Route path="/reward/:token" component={Reward} />
-                                <Route path="/recent_orders" component={RecentOrders} />
+                                <Route path="/recent" component={RecentOrders} />
 
                                 
                             </div>

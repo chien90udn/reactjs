@@ -74,19 +74,19 @@ class HomePage extends React.Component {
                     <div className="col">
                         <div className="row">
                             {listProduct.map((product, index) =>
-                                <div className="col-12 col-md-6 col-lg-4">
+                                <div className="col-12 col-md-6 col-lg-4 pb-2">
                                     <div className="card">
-                                        <img className="card-img-top" src={jpegDemo}/>
+                                        <img className="card-img-top" src={"public/assets/images/" + product.avatar}/>
                                         <div className="card-body">
                                             <h4 className="card-title"><a href={'/#/product/' + index} title="{product.name}">{product.name}</a></h4>
                                             
                                             <div className="row">
                                                 { (product.flag_type == 1) ?
                                                         <div className="col">
-                                                            <div className="col">
+                                                            <div className="row">
                                                             Price: <p className="text-danger float-right">{product.price} JPY</p>
                                                             </div>
-                                                            <div className="col clearfix">
+                                                            <div className="row clearfix">
                                                             Donate: <p className="text-primary float-right">{product.donate} TOKEN</p>
                                                             </div>
                                                         </div>

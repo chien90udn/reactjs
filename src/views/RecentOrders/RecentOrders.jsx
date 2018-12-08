@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../../actions';
-import {validateAddress}  from '../../components/common/helpers';
+import {validateEmail}  from '../../components/common/helpers';
 
 // Import libraries we need.
 import { default as Web3 } from 'web3'
@@ -33,8 +33,7 @@ class RecentOrders extends React.Component {
         this.props.dispatch(userActions.logout());
 
         this.state = {
-            username: '',
-            password: '',
+            email: '',
             submitted: false
         };
 
@@ -51,9 +50,9 @@ class RecentOrders extends React.Component {
         e.preventDefault();
 
         this.setState({ submitted: true });
-        const { username, token } = this.state;
+        const { email } = this.state;
         const { dispatch } = this.props;
-        if (username && validateAddress(username) && token) {
+        if (email && validateEmail(email)) {
             
             try {
                 axios.get('http://52.199.160.114/api/example/api.php?action=checkToken&token=' + token)
@@ -92,29 +91,23 @@ class RecentOrders extends React.Component {
     }
 
     render() {
+        console.log("dasssss");
         const { loggingIn } = this.props;
-        const { username, token, submitted } = this.state;
+        const { email, token, submitted } = this.state;
         return (
             <div className="col-md-10 offset-md-1">
-                <h2 className="text-center">Token</h2>
+                <h2 className="text-center">Recent Orders</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !token ? ' has-error' : '')}>
-                        <label htmlFor="token">Token</label>
-                        <input type="text" className="form-control" name="token" value={token} onChange={this.handleChange} />
-                        {submitted && !token &&
-                            <div className="help-block">Token is required</div>
+                    <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
+                        <label htmlFor="email">Email</label>
+                        <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
+                        {submitted && (!email || !validateEmail(email)) &&
+                            <div className="help-block">Email is required</div>
                         }
                     </div>
 
-                    <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                        <label htmlFor="username">Address</label>
-                        <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-                        {submitted && (!username || !validateAddress(username)) &&
-                            <div className="help-block">Address is required</div>
-                        }
-                    </div>
                     <div className="form-group">
-                        <button className="btn btn-primary">Get Reward</button>
+                        <button className="btn btn-primary">Check</button>
                     </div>
                 </form>
             </div>

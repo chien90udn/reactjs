@@ -42,7 +42,7 @@ class Header extends React.Component {
 		          	</li>
 
 		          	<li className="nav-item active">
-		            	<Link class="nav-link" to="/recent_order">Recent orders</Link>
+		            	<Link class="nav-link" to="/recent">Recent orders</Link>
 		          	</li>
 		          	
 
