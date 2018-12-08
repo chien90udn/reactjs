@@ -100,10 +100,11 @@ class RecentOrders extends React.Component {
                                             <img className="card-img-top" src={"public/assets/images/" + listProduct[order["product_id"]].avatar}/>
                                             <div className="card-body">
                                                 <h4 className="card-title"><a href={'/#/product/' + index} >{listProduct[order["product_id"]].name}</a></h4>
+                                                <div className="col">
+                                                    Status Payment: <p className="text-danger float-right">{order["status"]}</p>
+                                                </div>
                                             </div>
-                                            <div className="col">
-                                                Status Payment: <p className="text-danger float-right">{order["status"]}</p>
-                                            </div>
+                                            
                                         </div>
                                         :
                                         <div className="card">

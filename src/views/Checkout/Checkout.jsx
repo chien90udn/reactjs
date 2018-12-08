@@ -6,6 +6,7 @@ import {validateEmail}  from '../../components/common/helpers';
 var QRCode = require('qrcode.react');
 import { userActions } from '../../actions';
 import LoadingScreen  from '../../components/common/LoadingScreen.js';
+import { listProduct } from '../../constants';
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -21,11 +22,18 @@ class Checkout extends React.Component {
             show_qr_code: false,
             disabled: false,
             display_loading: false,
-            url_code : 'weixin://wxpay/bizpayurl?pr=W8hWg4X'
+            url_code : 'weixin://wxpay/bizpayurl?pr=W8hWg4X',
+            product_id: null
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentWillMount()
+    {
+        let id = this.props.match.params.id;
+        this.setState({product_id: id});
     }
 
     handleChange(e) {
@@ -48,8 +56,12 @@ class Checkout extends React.Component {
         this.setState({ submitted: true });
         const { email, confirm_email } = this.state;
         const { dispatch } = this.props;
-        let product_id = 1;
+        let product_id = this.state.product_id;
         let price = 1;
+        if(listProduct[product_id])
+        {
+            price = listProduct[product_id].price;
+        }
         if (email && validateEmail(email) && email == confirm_email) {
             this.setState({ show_qr_code: true ,
                             display_loading: true});
