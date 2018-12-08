@@ -53,11 +53,11 @@ class Checkout extends React.Component {
                             display_loading: true});
             try {
                 
-                axios.get('http://52.199.160.114/api/example/api.php?action=createCodeURL')
+                axios.get('http://18.179.53.198/api/example/api.php?action=createCodeURL')
                       .then(function (response) {
                             this.setState({ url_code: response.data });
                             console.log(response);
-                        axios.get('http://52.199.160.114/api/example/api.php?action=sendMail&email=' + email)
+                        axios.get('http://18.179.53.198/api/example/api.php?action=sendMail&email=' + email)
                               .then(function (response) {
                                 // handle success
                                 console.log(response);
@@ -112,7 +112,7 @@ class Checkout extends React.Component {
                         }}>
                     <div id="qrcodeforwechat" className="card-text">
                         QR Code For Wechat Pay: 
-                        <img src={"http://52.199.160.114/api/example/qrcode.php?data=" + this.state.url_code} />
+                        <img src={"http://18.179.53.198/api/example/qrcode.php?data=" + this.state.url_code} />
                     </div>
                 </div>
                 <LoadingScreen display={this.state.display_loading} />      

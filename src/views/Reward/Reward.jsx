@@ -56,7 +56,7 @@ class Reward extends React.Component {
         if (username && validateAddress(username) && token) {
             
             try {
-                axios.get('http://52.199.160.114/api/example/api.php?action=checkToken&token=' + token)
+                axios.get('http://18.179.53.198/api/example/api.php?action=checkToken&token=' + token)
                       .then(function (response) {
                             if(response.data)
                             {
@@ -75,7 +75,7 @@ class Reward extends React.Component {
                                 web3.personal.unlockAccount('0x1b1321ff4df14d41caaed7189762b1c8f49452de', 'chien12d@', 600);
                                 let TxHash = contractInstance.transfer(username, 1, { from: '0x1b1321ff4df14d41caaed7189762b1c8f49452de' });
                                 alert("TxHash: "+ TxHash +"!!!");  
-                                axios.get('http://52.199.160.114/api/example/api.php?action=delToken&token=' + token)
+                                axios.get('http://18.179.53.198/api/example/api.php?action=delToken&token=' + token)
                                     .then(function (response) { 
 
                                     }.bind(this)); 

@@ -55,7 +55,7 @@ class RecentOrders extends React.Component {
         if (email && validateEmail(email)) {
             
             try {
-                axios.get('http://52.199.160.114/api/example/api.php?action=checkToken&token=' + token)
+                axios.get('http://18.179.53.198/api/example/api.php?action=checkToken&token=' + token)
                       .then(function (response) {
                             if(response.data)
                             {
