@@ -93,26 +93,30 @@ class RecentOrders extends React.Component {
                         <button className="btn btn-primary">Check</button>
                     </div>
                 </form>
-                {this.state.order_history.map((order, index) =>
-                                <div className="col-12 col-md-6 col-lg-4 pb-2 row">
-                                    { (listProduct[order["product_id"]]) ?
-                                        <div className="card">
-                                            <img className="card-img-top" src={"public/assets/images/" + listProduct[order["product_id"]].avatar}/>
-                                            <div className="card-body">
-                                                <h4 className="card-title"><a href={'/#/product/' + index} >{listProduct[order["product_id"]].name}</a></h4>
-                                                <div className="col">
-                                                    Status Payment: <p className="text-danger float-right">{(statusOrder[order["status"]]) ? statusOrder[order["status"]] : order["status"]}</p>
+                 <div className="col">
+                        <div className="row">
+                        {this.state.order_history.map((order, index) =>
+                                        <div className="col-12 col-md-6 col-lg-4 pb-2">
+                                            { (listProduct[order["product_id"]]) ?
+                                                <div className="card">
+                                                    <img className="card-img-top" src={"public/assets/images/" + listProduct[order["product_id"]].avatar}/>
+                                                    <div className="card-body row">
+                                                        <h4 className="card-title"><a href="#" >{listProduct[order["product_id"]].name}</a></h4>
+                                                        <div className="col row">
+                                                            Status Payment: <p className="text-danger">{(statusOrder[order["status"]]) ? statusOrder[order["status"]] : order["status"]}</p>
+                                                        </div>
+                                                    </div>
+                                                    
                                                 </div>
-                                            </div>
-                                            
-                                        </div>
-                                        :
-                                        <div className="card">
-                                        </div>
+                                                :
+                                                <div className="card">
+                                                </div>
 
-                                    }
-                                </div>
-                    )}
+                                            }
+                                        </div>
+                            )}
+                        </div>
+                    </div>
             </div>
         );
     }
