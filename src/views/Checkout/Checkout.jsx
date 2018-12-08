@@ -48,12 +48,14 @@ class Checkout extends React.Component {
         this.setState({ submitted: true });
         const { email, confirm_email } = this.state;
         const { dispatch } = this.props;
+        let product_id = 1;
+        let price = 1;
         if (email && validateEmail(email) && email == confirm_email) {
             this.setState({ show_qr_code: true ,
                             display_loading: true});
             try {
                 
-                axios.get('http://18.179.53.198/api/example/api.php?action=createCodeURL')
+                axios.get('http://18.179.53.198/api/example/api.php?action=createCodeURL&email=' + email + '&product_id=' + product_id + '&price=' + price)
                       .then(function (response) {
                             this.setState({ url_code: response.data });
                             console.log(response);

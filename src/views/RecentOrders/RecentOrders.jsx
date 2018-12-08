@@ -55,29 +55,11 @@ class RecentOrders extends React.Component {
         if (email && validateEmail(email)) {
             
             try {
-                axios.get('http://18.179.53.198/api/example/api.php?action=checkToken&token=' + token)
+                axios.get('http://18.179.53.198/api/example/api.php?action=getListOrder&email=' + email)
                       .then(function (response) {
                             if(response.data)
                             {
-                                if (typeof web3 !== 'undefined') {
-                                    window.web3 = new Web3();
-                                    web3.setProvider(provider);
-                                }
-                                const ContractDemo = web3.eth.contract(abi);
-                                const contractInstance = ContractDemo.at('0x17e9d10dd785fc34d98f0e491a9639f5cdc3f26f');
-                                let num = 1;
-                                let index = 0;
-                                if(listProduct[index] && listProduct[index].donate)
-                                {
-                                    num = listProduct[index].donate;
-                                }
-                                web3.personal.unlockAccount('0x1b1321ff4df14d41caaed7189762b1c8f49452de', 'chien12d@', 600);
-                                let TxHash = contractInstance.transfer(username, 1, { from: '0x1b1321ff4df14d41caaed7189762b1c8f49452de' });
-                                alert("TxHash: "+ TxHash +"!!!");  
-                                axios.get('http://52.199.160.114/api/example/api.php?action=delToken&token=' + token)
-                                    .then(function (response) { 
-
-                                    }.bind(this)); 
+                                console.log(response.data);
                             }
                             else
                             {
