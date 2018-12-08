@@ -101,7 +101,7 @@ class RecentOrders extends React.Component {
                                                 <div className="card">
                                                     <img className="card-img-top" src={"public/assets/images/" + listProduct[order["product_id"]].avatar}/>
                                                     <div className="card-body row">
-                                                        <h4 className="card-title"><a href="#" >{listProduct[order["product_id"]].name}</a></h4>
+                                                        <h4 className="card-title col-12"><a href="#" >{listProduct[order["product_id"]].name}</a></h4>
                                                         <div className="col row">
                                                             Status Payment: <p className="text-danger">{(statusOrder[order["status"]]) ? statusOrder[order["status"]] : order["status"]}</p>
                                                         </div>
