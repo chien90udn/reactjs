@@ -103,6 +103,10 @@ class RecentOrders extends React.Component {
                                                 
                                             </div>
                                         </div>
+                                        :
+                                        <div className="card">
+                                        </div>
+
                                     }
                                 </div>
                     )}
