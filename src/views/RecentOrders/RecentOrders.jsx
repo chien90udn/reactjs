@@ -8,7 +8,7 @@ import {validateEmail}  from '../../components/common/helpers';
 // Import libraries we need.
 import { default as Web3 } from 'web3'
 import { default as contract } from 'truffle-contract'
-import { listProduct } from '../../constants';
+import { listProduct, statusOrder } from '../../constants';
 
 // Import our contract artifacts and turn them into usable abstractions.
 import demooken_artifacts from '../../build/contracts/DEMOToken.json';
@@ -101,7 +101,7 @@ class RecentOrders extends React.Component {
                                             <div className="card-body">
                                                 <h4 className="card-title"><a href={'/#/product/' + index} >{listProduct[order["product_id"]].name}</a></h4>
                                                 <div className="col">
-                                                    Status Payment: <p className="text-danger float-right">{order["status"]}</p>
+                                                    Status Payment: <p className="text-danger float-right">{(statusOrder[order["status"]]) ? statusOrder[order["status"]] : order["status"]}</p>
                                                 </div>
                                             </div>
                                             

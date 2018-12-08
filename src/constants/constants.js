@@ -22,6 +22,9 @@ export const typeProduct = {
     donate_token    : 2
 };
 
+export const statusOrder = ['Pending', 'Success', 'Failed'];
+
+
 export const listProduct = [ 
     {
         id          : "01", 
