@@ -5,6 +5,7 @@ import axios from 'axios';
 import {validateEmail}  from '../../components/common/helpers';
 var QRCode = require('qrcode.react');
 import { userActions } from '../../actions';
+import LoadingScreen  from '../../components/common/LoadingScreen.js';
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -18,6 +19,8 @@ class Checkout extends React.Component {
             confirm_email: '',
             submitted: false,
             show_qr_code: false,
+            disabled: false,
+            display_loading: false,
             url_code : 'weixin://wxpay/bizpayurl?pr=W8hWg4X'
         };
 
@@ -31,7 +34,11 @@ class Checkout extends React.Component {
     }
 
     handlePaste(e){
+        this.setState({ disabled: true });
         alert("Not allowed");
+        setTimeout(function(){
+          this.setState({ disabled: false }); 
+        }.bind(this), 500);
         return false;
     }
 
@@ -42,7 +49,8 @@ class Checkout extends React.Component {
         const { email, confirm_email } = this.state;
         const { dispatch } = this.props;
         if (email && validateEmail(email) && email == confirm_email) {
-            this.setState({ show_qr_code: true });
+            this.setState({ show_qr_code: true ,
+                            display_loading: true});
             try {
                 
                 axios.get('http://52.199.160.114/api/example/api.php?action=createCodeURL')
@@ -54,16 +62,21 @@ class Checkout extends React.Component {
                                 // handle success
                                 console.log(response);
                             }.bind(this));
-                    }.bind(this));
+                        this.setState({ display_loading: false});
+                    }.bind(this))
+                    .catch(error => {
+                        this.setState({ display_loading: false});
+                    });
             } catch (err) {
                console.log(err);
+               this.setState({ display_loading: false});
             }
         }
     }
 
     render() {
         const { loggingIn } = this.props;
-        const { email ,submitted, confirm_email } = this.state;
+        const { email ,submitted, confirm_email, disabled } = this.state;
        
         return (
             <div className="col-md-10 offset-md-1">
@@ -81,9 +94,12 @@ class Checkout extends React.Component {
                         </div>
                          <div className={'form-group' + (submitted && !confirm_email ? ' has-error' : '')}>
                             <label htmlFor="confirm_email">Confirm Email</label>
-                            <input onPaste={(e) => this.handlePaste(e)} type="text" className="form-control" name="confirm_email" value={confirm_email} onChange={this.handleChange} />
+                            <input disabled = {disabled} onPaste={(e) => this.handlePaste(e)} type="text" className="form-control" name="confirm_email" value={confirm_email} onChange={this.handleChange} />
                             {submitted && (!confirm_email || !validateEmail(confirm_email))  &&
                                 <div className="help-block">Confirm email is required</div>
+                            }
+                            {submitted && validateEmail(confirm_email) && validateEmail(email) && confirm_email != email  &&
+                                <div className="help-block">Confirm email does not match</div>
                             }
                         </div>
                         <div className="form-group">
@@ -99,6 +115,7 @@ class Checkout extends React.Component {
                         <img src={"http://52.199.160.114/api/example/qrcode.php?data=" + this.state.url_code} />
                     </div>
                 </div>
+                <LoadingScreen display={this.state.display_loading} />      
             </div>
         );
     }
