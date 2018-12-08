@@ -56,7 +56,7 @@ class RecentOrders extends React.Component {
         if (email && validateEmail(email)) {
             
             try {
-                axios.get('http://18.179.53.198/api/example/api.php?action=getListOrder&email=' + email)
+                axios.get('http://18.179.53.198/api/example/api.php?action=getListOrder&email=' + email, headers)
                       .then(function (response) {
                             if(response.data)
                             {
@@ -94,13 +94,15 @@ class RecentOrders extends React.Component {
                     </div>
                 </form>
                 {this.state.order_history.map((order, index) =>
-                                <div className="col-12 col-md-6 col-lg-4 pb-2">
-                                    { (listProduct[order[2]]) ?
+                                <div className="col-12 col-md-6 col-lg-4 pb-2 row">
+                                    { (listProduct[order["product_id"]]) ?
                                         <div className="card">
-                                            <img className="card-img-top" src={"public/assets/images/" + listProduct[order[2]].avatar}/>
+                                            <img className="card-img-top" src={"public/assets/images/" + listProduct[order["product_id"]].avatar}/>
                                             <div className="card-body">
-                                                <h4 className="card-title"><a href={'/#/product/' + index} >{listProduct[order[2]].name}</a></h4>
-                                                
+                                                <h4 className="card-title"><a href={'/#/product/' + index} >{listProduct[order["product_id"]].name}</a></h4>
+                                            </div>
+                                            <div className="col">
+                                                Status Payment: <p className="text-danger float-right">{order["status"]}</p>
                                             </div>
                                         </div>
                                         :
