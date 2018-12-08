@@ -60,11 +60,11 @@ class RecentOrders extends React.Component {
                       .then(function (response) {
                             if(response.data)
                             {
-                                console.log(response.data);
+                                this.setState({ order_history: response.data });
                             }
                             else
                             {
-                               alert('Token not found!'); 
+                               alert('Account not found!'); 
                             }
                     }.bind(this));            
             } catch (err) {
@@ -95,13 +95,15 @@ class RecentOrders extends React.Component {
                 </form>
                 {this.state.order_history.map((order, index) =>
                                 <div className="col-12 col-md-6 col-lg-4 pb-2">
-                                    <div className="card">
-                                        <img className="card-img-top" src={"public/assets/images/" + index}/>
-                                        <div className="card-body">
-                                            <h4 className="card-title"><a href={'/#/product/' + index} >{index}</a></h4>
-                                            
+                                    { (listProduct[order[2]]) ?
+                                        <div className="card">
+                                            <img className="card-img-top" src={"public/assets/images/" + listProduct[order[2]].avatar}/>
+                                            <div className="card-body">
+                                                <h4 className="card-title"><a href={'/#/product/' + index} >{listProduct[order[2]].name}</a></h4>
+                                                
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                     )}
             </div>
